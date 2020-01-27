@@ -1,0 +1,353 @@
+title: Home
+
+resources:
+  - url: /community_plugin/custom-header/custom-header.js
+    type: module
+  - url: /community_plugin/mini-media-player/mini-media-player-bundle.js
+    type: module
+  - url: /community_plugin/lovelace-swipe-navigation/swipe-navigation.js
+    type: js
+  - url: /community_plugin/mini-graph-card/mini-graph-card-bundle.js
+    type: module
+  - url: /community_plugin/swipe-card/swipe-card.js
+    type: module
+  
+custom_header:
+  kiosk_mode: true
+
+swipe_nav:
+  animate: swipe
+background: center / cover no-repeat url("/local/custom_assets/wallpaper.jpg") fixed
+
+views:
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: vertical-stack
+                cards:
+                  - type: glance
+                    title: Bedroom
+                    entities:
+                      - entity: scene.morning_bedroom
+                        show_state: false
+                        icon: 'mdi:weather-sunset-up'
+                        name: Morning
+                        tap_action:
+                          action: call-service
+                          service: scene.turn_on
+                          service_data:
+                            entity_id: scene.morning_bedroom
+                      - entity: scene.day_bedroom
+                        show_state: false
+                        icon: 'mdi:weather-sunny'
+                        name: Day
+                        tap_action:
+                          action: call-service
+                          service: scene.turn_on
+                          service_data:
+                            entity_id: scene.day_bedroom
+                      - entity: scene.evening_bedroom
+                        show_state: false
+                        icon: 'mdi:weather-sunset-down'
+                        name: Evening
+                        tap_action:
+                          action: call-service
+                          service: scene.turn_on
+                          service_data:
+                            entity_id: scene.evening_bedroom
+                      - entity: scene.ambient_bedroom
+                        show_state: false
+                        icon: 'mdi:weather-sunset'
+                        name: Ambient
+                        tap_action:
+                          action: call-service
+                          service: scene.turn_on
+                          service_data:
+                            entity_id: scene.ambient_bedroom
+                      - entity: scene.sleep_bedroom
+                        show_state: false
+                        icon: 'mdi:weather-night'
+                        name: Sleep
+                        tap_action:
+                          action: call-service
+                          service: scene.turn_on
+                          service_data:
+                            entity_id: scene.sleep_bedroom
+                      - entity: light.bedroom_ceiling
+                        name: Ceiling
+                        tap_action:
+                          action: toggle
+                      - entity: light.bedroom_bedside_1
+                        name: Bedside 1
+                        tap_action:
+                          action: toggle
+                      - entity: light.bedroom_bedside_2
+                        name: Bedside 2
+                        tap_action:
+                          action: toggle
+                      - entity: light.bedroom_colour_strip
+                        name: Colour Strip
+                        tap_action:
+                          action: toggle
+                      - entity: light.wardrobe_colour_strip
+                        name: Wardrobe
+                        tap_action:
+                          action: toggle
+                  - type: conditional
+                    conditions:
+                      - entity: media_player.bedroom_speaker
+                        state: "playing"
+                    card:
+                      type: custom:mini-media-player
+                      entity: media_player.bedroom_speaker
+                      artwork: cover
+                      info: short
+                      hide:
+                        power: true
+                  - type: conditional
+                    conditions:
+                      - entity: media_player.spotify
+                        state: "playing"
+                      - entity: media_player.bedroom_speaker
+                        state_not: "playing"
+                    card:
+                      type: custom:mini-media-player
+                      entity: media_player.spotify
+                      artwork: cover
+                      info: short
+                      hide:
+                        power: true
+                  - type: conditional
+                    conditions:
+                      - entity: media_player.spotify
+                        state_not: "playing"
+                      - entity: media_player.bedroom_speaker
+                        state_not: "playing"
+                    card:
+                      type: picture
+                      image: local/custom_assets/gifs/cropped/ezgif-6-9ca1c26ae2d8.gif
+                  - type: horizontal-stack
+                    cards:
+                      - type: custom:swipe-card
+                        parameters:
+                          autoplay:
+                            delay: 5000
+                          speed: 2000
+                        cards:
+                          - type: custom:mini-graph-card
+                            entities:
+                              - sensor.gbp_zar
+                            name: GBP/ZAR
+                            hours_to_show: 168
+                            points_per_hour: 0.25
+                            height: 60
+                            font_size: 80
+                            font_size_header: 10
+                          - type: custom:mini-graph-card
+                            entities:
+                              - sensor.usd_gbp
+                            name: USD/GBP
+                            hours_to_show: 168
+                            points_per_hour: 0.25
+                            height: 60
+                            font_size: 80
+                            font_size_header: 10
+                      - type: custom:mini-graph-card
+                        entities:
+                          - sensor.electronic_arts_inc
+                        hours_to_show: 168
+                        points_per_hour: 0.25
+                        height: 60
+                        font_size: 80
+                        font_size_header: 10
+              - type: vertical-stack
+                cards:
+                  - type: glance
+                    title: House
+                    entities:
+                      - entity: scene.morning
+                        icon: 'mdi:weather-sunset-up'
+                        name: Morning
+                        tap_action:
+                          action: call-service
+                          service: scene.turn_on
+                          service_data:
+                            entity_id: scene.morning
+                      - entity: scene.day
+                        icon: 'mdi:weather-sunny'
+                        name: Day
+                        tap_action:
+                          action: call-service
+                          service: scene.turn_on
+                          service_data:
+                            entity_id: scene.day
+                      - entity: scene.evening
+                        icon: 'mdi:weather-sunset-down'
+                        name: Evening
+                        tap_action:
+                          action: call-service
+                          service: scene.turn_on
+                          service_data:
+                            entity_id: scene.evening
+                      - entity: scene.ambient
+                        icon: 'mdi:weather-sunset'
+                        name: Ambient
+                        tap_action:
+                          action: call-service
+                          service: scene.turn_on
+                          service_data:
+                            entity_id: scene.ambient
+                      - entity: scene.sleep
+                        icon: 'mdi:weather-night'
+                        name: Sleep
+                        tap_action:
+                          action: call-service
+                          service: scene.turn_on
+                          service_data:
+                            entity_id: scene.sleep
+                    show_state: false
+                  - elements:
+                      - entity: light.living_room_ceiling_1
+                        style:
+                          left: 22%
+                          top: 30%
+                        tap_action:
+                          action: toggle
+                        type: state-icon
+                      - entity: light.living_room_ceiling_2
+                        style:
+                          left: 40%
+                          top: 30%
+                        tap_action:
+                          action: toggle
+                        type: state-icon
+                      - entity: light.living_room_floor_lamp
+                        style:
+                          left: 30%
+                          top: 10%
+                        tap_action:
+                          action: toggle
+                        type: state-icon
+                      - entity: light.living_room_table_lamp
+                        style:
+                          left: 47%
+                          top: 50%
+                        tap_action:
+                          action: toggle
+                        type: state-icon
+                      - entity: light.living_room_colour_strip
+                        style:
+                          left: 10%
+                          top: 25%
+                        tap_action:
+                          action: toggle
+                        type: state-icon
+                      - entity: light.bedroom_bedside_1
+                        style:
+                          left: 53%
+                          top: 65%
+                        tap_action:
+                          action: toggle
+                        type: state-icon
+                      - entity: light.bedroom_bedside_2
+                        style:
+                          left: 53%
+                          top: 88%
+                        tap_action:
+                          action: toggle
+                        type: state-icon
+                      - entity: light.bedroom_ceiling
+                        style:
+                          left: 67%
+                          top: 77%
+                        tap_action:
+                          action: toggle
+                        type: state-icon
+                      - entity: light.bedroom_colour_strip
+                        style:
+                          left: 79%
+                          top: 72%
+                        tap_action:
+                          action: toggle
+                        type: state-icon
+                      - entity: light.wardrobe_colour_strip
+                        style:
+                          left: 90%
+                          top: 72%
+                        tap_action:
+                          action: toggle
+                        type: state-icon
+                      - entity: light.passage_lower
+                        style:
+                          left: 57%
+                          top: 51%
+                        tap_action:
+                          action: toggle
+                        type: state-icon
+                      - entity: light.passage_upper
+                        style:
+                          left: 72%
+                          top: 51%
+                        tap_action:
+                          action: toggle
+                        type: state-icon
+                    image: local/custom_assets/floorplan.png
+                    type: picture-elements
+          - type: horizontal-stack
+            cards:
+              - type: glance
+                show_name: true
+                show_icon: false
+                entities:
+                  - entity: sensor.dark_sky_temperature
+                    name: Temperature
+                  - entity: sensor.dark_sky_apparent_temperature
+                    name: Real Feel
+                  - entity: sensor.dark_sky_daytime_high_temperature_0d
+                    name: Hi
+                  - entity: sensor.dark_sky_overnight_low_temperature_0d
+                    name: Lo
+              - type: horizontal-stack
+                cards:
+                  - type: custom:swipe-card
+                    parameters:
+                      autoplay:
+                        delay: 4000
+                      speed: 2000
+                    cards:
+                      - type: glance
+                        show_name: true
+                        show_icon: false
+                        entities:
+                          - entity: sensor.dark_sky_summary
+                            name: Today
+                      - type: glance
+                        show_name: true
+                        show_icon: false
+                        entities:
+                          - entity: sensor.dark_sky_summary_1d
+                            name: Tomorrow
+                  - type: custom:swipe-card
+                    parameters:
+                      autoplay:
+                        delay: 4250
+                      speed: 2000
+                    cards:
+                      - type: glance
+                        show_name: true
+                        show_icon: false
+                        entities:
+                          - entity: person.daryn
+                            name: Daryn
+                      - type: glance
+                        show_name: true
+                        show_icon: false
+                        entities:
+                          - entity: person.storm
+                            name: Storm
+    icon: 'mdi:test-tube'
+    panel: true
+    theme: Backend-selected
+    title: Test
